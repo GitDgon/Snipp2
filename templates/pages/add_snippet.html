@@ -26,6 +26,10 @@
                 padding-right: 15px;
                 padding-left: 15px;
             }
+            .blue{
+            color: blue;
+            }
+
         </style>
     {% endblock %}
 </head>
@@ -66,8 +70,11 @@
 
         <div class="row">
             <div class="col">
-                <form action="" method="post">
+
+
+<!--                <form action="" method="post">
                     {% csrf_token %}
+
                     <div class="form-group row">
                         <div class="col-8">
                             <input type="text" name="name" class="form-control form-control-lg"
@@ -93,10 +100,26 @@
                             <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
                         </div>
                     </div>
+                </form> --!>
+
+
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button type="submit">
+                            Создать
+
+                    </button>
                 </form>
+
 
             </div>
         </div>
+
+
+
+
     </div>
 </main>
 
