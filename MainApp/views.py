@@ -2,6 +2,8 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm
+from django.contrib import auth
+
 
 
 def index_page(request):
@@ -40,3 +42,25 @@ def snippets_page(request):
         'snippets': snippets
     }
     return render(request, 'pages/view_snippets.html', context)
+
+
+def login_page(request):             #аторизация
+   if request.method == 'POST':
+       username = request.POST.get("username")
+       password = request.POST.get("password")
+#       print("username =", username)
+#       print("password =", password)
+
+       user = auth.authenticate(request, username=username,
+                                password=password)
+       if user is not None:
+           auth.login(request, user)
+       else:
+           # Return error message
+           pass
+       return redirect('home')
+
+
+def logout_page(request):  #разлогирование
+    auth.logout(request)
+    return redirect('home')
