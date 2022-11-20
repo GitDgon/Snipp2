@@ -22,7 +22,10 @@ def add_snippet_page(request):
 #        snippet.save() #сохраняем введенные данные
         form = SnippetForm(request.POST)
         if form.is_valid():
-            form.save()
+#            form.save()
+            snippet = form.save(commit=False)
+            snippet.user = request.user
+            snippet.save()
         return redirect('snippet-list')
         #print(f'{form_data=}')
         #обработка данных формы
