@@ -81,6 +81,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Название</th>
                         <th scope="col">Дата создания</th>
+                        <th scope="col">Автор</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -90,6 +92,7 @@
                         <td scope="row">{{ snippet.id }}</td>
                         <td><a href="/snippets/{{snippet.id}}">{{ snippet.name }}</a></td>
                         <td>{{ snippet.creation_date }}</td>
+                        <td>{{ snippet.user | default:"Аноним" }}</td>
                     </tr>
 
                     {% endfor  %}

@@ -30,12 +30,13 @@ def add_snippet_page(request):
 #            code = form_data['code']
 #        )
 #        snippet.save() #сохраняем введенные данные
-        form = SnippetForm(request.POST)
-        if form.is_valid():
+        form = SnippetForm(request.POST) #получение информации от формы
+        if form.is_valid():     #проверка на валидность
 #            form.save()
-            snippet = form.save(commit=False)
-            snippet.user = request.user
-            snippet.save()
+            snippet = form.save(commit=False) #данные не сохраняем, но возвращаем объект
+                                               # сниппета через snippet
+            snippet.user = request.user  #добавляем пользователя
+            snippet.save()                #сохраняем в BD
         return redirect('snippet-list')
         #print(f'{form_data=}')
         #обработка данных формы
@@ -49,9 +50,18 @@ def add_snippet_page(request):
 
 
 def snippets_page(request):
-    snippets = Snippet.objects.all()
+    snippets = Snippet.objects.all()   #запрос из базы всех объектов
     context = {
         'pagename': 'Просмотр сниппетов',
+        'snippets': snippets
+    }
+    return render(request, 'pages/view_snippets.html', context)
+
+
+def snippet_my(request):
+    snippets = Snippet.objects.filter(user=request.user)  #запрос из базы
+    context = {
+        'pagename': 'Мои сниппеты',
         'snippets': snippets
     }
     return render(request, 'pages/view_snippets.html', context)
@@ -93,3 +103,6 @@ def registration(request):
         form = UserRegistrationForm()
         context = {'form': form}
         return render(request, 'pages/registration.html', context)
+
+
+
