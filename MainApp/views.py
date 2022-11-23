@@ -80,10 +80,15 @@ def logout_page(request):  #разлогирование
 
 def registration(request):
     if request.method == "POST":    #Создаем пользователя
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST) #данная форма - валидация введенных пользователь данных user password
         if form.is_valid():
             form.save()
             return redirect('home')
+        else:
+#            print("errors=", form.errors.items())   #еслм при валидации ошибки, то они запишутся в
+#                                             #словарик form.errors
+            context = {'form': form}
+            return render(request, 'pages/registration.html', context)
     elif request.method == "GET":   #Создаем страницу с формой
         form = UserRegistrationForm()
         context = {'form': form}
