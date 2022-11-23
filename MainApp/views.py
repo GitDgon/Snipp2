@@ -7,7 +7,17 @@ from django.contrib import auth
 
 
 def index_page(request):
-    context = {'pagename': 'PythonBin'}
+#    print("User:", request.user)
+    if request.user.is_authenticated:
+        errors = []
+    else:
+        errors = ["password or username not correct"]  # если не авторизован
+
+    context = {
+        'pagename': 'PythonBin',
+        "errors": errors
+    }
+
     return render(request, 'pages/index.html', context)
 
 
@@ -54,13 +64,13 @@ def login_page(request):             #аторизация
 #       print("username =", username)
 #       print("password =", password)
 
-       user = auth.authenticate(request, username=username,
+       user = auth.authenticate(request, username=username, #проверяем пользователя
                                 password=password)
        if user is not None:
-           auth.login(request, user)
-       else:
-           # Return error message
-           pass
+           auth.login(request, user)  #если пользователь ОК, то авторизуем
+#       else:
+ #          # Return error message
+ #          pass
        return redirect('home')
 
 
