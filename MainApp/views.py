@@ -59,6 +59,15 @@ def snippets_page(request):
     return render(request, 'pages/view_snippets.html', context)
 
 
+def snippet_detail(request, snippet_id):
+    snippet = Snippet.objects.get(pk=snippet_id)
+    context = {
+        'pagename': 'Страница сниппета',
+        "snippet": snippet,
+    }
+    return render(request, 'pages/snippet_page.html', context)
+
+
 @login_required()    #для обеспечения отображения кнопки Мои снипеты только авторизованным пользователям
 def snippet_my(request):
     snippets = Snippet.objects.filter(user=request.user)  #запрос из базы
