@@ -91,7 +91,14 @@
                     <tr>
                         <td scope="row">{{ snippet.id }}</td>
 <!--                        <td><a href="/snippets/{{snippet.id}}">{{ snippet.name }}</a></td> --!>
-                        <td><a href="{% url 'snippet-detail' snippet.id %}">{{ snippet.name }}</a></td>
+                        <td>
+                            <a href="{% url 'snippet-detail' snippet.id %}">
+                                {{ snippet.name }}
+                            </a>
+                            <a href="{% url 'snippet-delete' snippet.id %}">
+                                <i style="color: #da7b87" class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
                         <td>{{ snippet.creation_date }}</td>
                         <td>{{ snippet.user | default:"Аноним" }}</td>
                     </tr>

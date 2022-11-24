@@ -18,7 +18,6 @@ def index_page(request):
         'pagename': 'PythonBin',
         "errors": errors
     }
-
     return render(request, 'pages/index.html', context)
 
 
@@ -50,6 +49,14 @@ def add_snippet_page(request):
         return render(request, 'pages/add_snippet.html', context)
 
 
+
+def snippet_delete(request, snippet_id):
+    snippet = Snippet.objects.get(pk=snippet_id)
+    snippet.delete()
+    return redirect('snippet-list')
+
+
+
 def snippets_page(request):
     snippets = Snippet.objects.all()   #запрос из базы всех объектов
     context = {
@@ -59,7 +66,7 @@ def snippets_page(request):
     return render(request, 'pages/view_snippets.html', context)
 
 
-def snippet_detail(request, snippet_id):
+def snippet_detail(request, snippet_id):   #отображение отдельного сниппета
     snippet = Snippet.objects.get(pk=snippet_id)
     context = {
         'pagename': 'Страница сниппета',
@@ -98,6 +105,7 @@ def login_page(request):             #аторизация
 def logout_page(request):  #разлогирование
     auth.logout(request)
     return redirect('home')
+
 
 def registration(request):
     if request.method == "POST":    #Создаем пользователя
