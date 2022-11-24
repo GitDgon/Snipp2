@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm, UserRegistrationForm
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -58,6 +59,7 @@ def snippets_page(request):
     return render(request, 'pages/view_snippets.html', context)
 
 
+@login_required()    #для обеспечения отображения кнопки Мои снипеты только авторизованным пользователям
 def snippet_my(request):
     snippets = Snippet.objects.filter(user=request.user)  #запрос из базы
     context = {
